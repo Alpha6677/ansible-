@@ -1,0 +1,23 @@
+- name: Fetch current weather data for college Station, Texas
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Get weather data for college station, Texas
+      ansible.builtin.uri:
+        url: "https://api/weather.gov/points/30.6280,-96.3344"
+        method: GET
+        validate_certs: yes
+      register: weather_response
+
+    - name: Get detailed forecast data
+      ansible.builtin.uri:
+        url: "{y{ weather_response.json.properties.forecast }}"
+        method: GET
+        validate_certs: yes
+      register: forecast_response
+
+    - name: Display detailed forecast data
+      ansible.builtin.debug:
+        var: forecase_response.json
+    
+    

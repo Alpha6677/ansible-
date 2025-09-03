@@ -1,0 +1,12 @@
+---
+- name: A simple Ansible to add a user to a Rocky user
+  hosts: 63.178.4.65
+  gather_facts: false
+  vars:
+    username: testuser
+  tasks:
+    - name: Add users to the Rocky host
+      ansible.builtin.user:
+        name: "{{ username }}"
+        state: present
+      become: true
